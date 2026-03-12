@@ -73,8 +73,8 @@ whiteboard/
 ### 1. Clone the repository
 
 ```bash
-git clone <your-repo-url>
-cd whiteboard
+git clone https://github.com/bhavyasatyasri200/Real-Time-Collaborative-Whiteboard-with-Socket.io-and-Canvas-API.git
+cd Real-Time-Collaborative-Whiteboard-with-Socket.io-and-Canvas-API
 ```
 
 ### 2. Configure environment variables
@@ -82,7 +82,7 @@ cd whiteboard
 Copy the example file and fill in your values:
 
 ```bash
-cp .env.example .env
+cp .env.example to .env
 ```
 
 Edit `.env`:
