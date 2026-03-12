@@ -1,0 +1,11 @@
+{
+    "testUser": {
+      "email": "task742@gmail.com"
+    },
+    "oauthCredentials": {
+      "google": {
+        "clientId": "121207734014-lcbma4g179kf6tu009n3d46p8ia95q04.apps.googleusercontent.com",
+        "clientSecret": "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"
+      }
+    }
+  }

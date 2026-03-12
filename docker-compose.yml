@@ -1,0 +1,191 @@
+# # version: "3.8"
+
+# # services:
+
+# #   db:
+# #     image: postgres:13
+# #     container_name: whiteboard-db
+# #     restart: always
+# #     environment:
+# #       POSTGRES_USER: user
+# #       POSTGRES_PASSWORD: password
+# #       POSTGRES_DB: whiteboard
+# #     ports:
+# #       - "5432:5432"
+# #     volumes:
+# #       - ./backend/seeds:/docker-entrypoint-initdb.d
+# #     healthcheck:
+# #       test: ["CMD-SHELL", "pg_isready -U user -d whiteboard"]
+# #       interval: 10s
+# #       timeout: 5s
+# #       retries: 5
+
+# #   backend:
+# #     build: ./backend
+# #     container_name: whiteboard-backend
+# #     ports:
+# #       - "3001:3001"
+# #     environment:
+# #       DATABASE_URL: postgresql://user:password@db:5432/whiteboard
+# #       PORT: 3001
+# #       JWT_SECRET: secret123
+# #     depends_on:
+# #       db:
+# #         condition: service_healthy
+# #     healthcheck:
+# #       test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+# #       interval: 10s
+# #       timeout: 5s
+# #       retries: 5
+
+# #   frontend:
+# #     build: ./frontend
+# #     container_name: whiteboard-frontend
+# #     ports:
+# #       - "3000:3000"
+# #     depends_on:
+# #       - backend
+# version: "3.9"
+
+# services:
+
+#   db:
+#     image: postgres:15
+#     container_name: whiteboard_db
+#     restart: always
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: whiteboard
+#     ports:
+
+#       - "5432:5432"
+#     volumes:
+#       - ./backend/seeds:/docker-entrypoint-initdb.d
+
+#   backend:
+#     build: ./backend
+#     container_name: whiteboard_backend
+#     ports:
+#       - "3001:3001"
+#     depends_on:
+#       - db
+#     environment:
+#       DATABASE_URL: postgresql://postgres:password@db:5432/whiteboard 
+#   frontend:
+#     build: ./frontend
+#     container_name: whiteboard_frontend
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - backend
+
+# version: "3.9"
+
+# services:
+
+#   db:
+#     image: postgres:15
+#     container_name: whiteboard_db
+#     restart: always
+#     environment:
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: whiteboard
+#     ports:
+#       - "5432:5432"
+#     volumes:
+#       - ./backend/seeds:/docker-entrypoint-initdb.d
+#     healthcheck:
+#       test: ["CMD-SHELL", "pg_isready -U user -d whiteboard"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 5
+
+#   backend:
+#     build: ./backend
+#     container_name: whiteboard_backend
+#     ports:
+#       - "3001:3001"
+#     depends_on:
+#       db:
+#         condition: service_healthy
+#     environment:
+#       DATABASE_URL: postgresql://postgres:password@db:5432/whiteboard
+#       PORT: 3001
+#       FRONTEND_URL: http://localhost:3000
+#       GOOGLE_CLIENT_ID: 121207734014-lcbma4g179kf6tu009n3d46p8ia95q04.apps.googleusercontent.com
+#       GOOGLE_CLIENT_SECRET: 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
+#       SESSION_SECRET: whiteboard_secret_2026
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: password
+#       POSTGRES_DB: whiteboard
+#     healthcheck:
+#       test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+#       interval: 10s
+#       timeout: 5s
+#       retries: 5
+
+#   frontend:
+#     build: ./frontend
+#     container_name: whiteboard_frontend
+#     ports:
+#       - "3000:3000"
+#     depends_on:
+#       - backend
+
+version: "3.9"
+
+services:
+
+  db:
+    image: postgres:15
+    container_name: whiteboard_db
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./backend/seeds:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build: ./backend
+    container_name: whiteboard_backend
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      PORT: ${PORT}
+      FRONTEND_URL: ${FRONTEND_URL}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET}
+      SESSION_SECRET: ${SESSION_SECRET}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  frontend:
+    build: ./frontend
+    container_name: whiteboard_frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
