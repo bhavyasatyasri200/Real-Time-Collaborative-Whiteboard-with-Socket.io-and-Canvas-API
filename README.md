@@ -15,7 +15,7 @@ A production-ready, real-time collaborative whiteboard application built with Re
 | **Node.js + Express.js** | Backend API + WebSocket server | Fast, non-blocking I/O perfect for handling many concurrent WebSocket connections |
 | **PostgreSQL** | Database | Persists board states and user sessions reliably. Structured data fits well for board ownership and canvas object storage |
 | **Docker + Docker Compose** | Containerization | Single `docker-compose up` command starts all 3 services (frontend, backend, db) with correct startup order and health checks |
-| **Passport.js + Google OAuth** | Authentication | Industry-standard OAuth flow. Users log in with Google — no passwords to manage |
+| **JWT + Google OAuth** | Authentication | Industry-standard OAuth flow. Users log in with Google — no passwords to manage |
 
 ---
 
